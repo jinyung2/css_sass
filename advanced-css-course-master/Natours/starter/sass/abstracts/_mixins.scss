@@ -1,0 +1,57 @@
+@mixin clearfix {
+  &::after {
+    content: ""; // must define content or pseudo element does not display
+    display: table;
+    clear: both; // clears float left and right
+    // clearfix is kind of a "hack" when using floats
+    // the height of the box collapses to 0 when using floats
+  }
+}
+
+@mixin center-h-v {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// media query manager
+/* 
+0 ~ 600 px  mobile phone
+601~900px   portrait tablet
+901~1200px  landscape tablet
+1201~1800px desktop [our current normal style for desktop first approach]
+1801px+     beeeg desktop
+
+breakpoint argument choices:
+- phone
+- tablet-port
+- tablet-land
+- big-desktop
+
+Order; base + typography > general layout + grid > page layout > components
+*/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    }
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    }
+  }
+  
+}
